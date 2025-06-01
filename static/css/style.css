@@ -1,0 +1,61 @@
+body {
+    background-color: #f8f9fa;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.card {
+    border-radius: 0.5rem;
+}
+
+.diff-container {
+    overflow-x: auto;
+}
+
+table.diff {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.diff th {
+    text-align: center;
+    padding: 0.5rem;
+    background-color: #f1f1f1;
+}
+
+table.diff td {
+    padding: 0.5rem;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.diff_header {
+    background-color: #e0e0e0;
+}
+
+.diff_next {
+    background-color: #f8f9fa;
+}
+
+.diff_add {
+    background-color: #d4edda;
+}
+
+.diff_chg {
+    background-color: #fff3cd;
+}
+
+.diff_sub {
+    background-color: #f8d7da;
+}
+
+.replacement-pair {
+    margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .replacement-pair .col-md-5 {
+        margin-bottom: 0.5rem;
+    }
+}

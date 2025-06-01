@@ -1,0 +1,163 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e3e4fd, #ffffff);
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background: #fff;
+      max-width: 1200px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 35px 40px;
+      transition: all 0.3s ease;
+      animation: fadeIn 0.6s ease-in;
+    }
+
+    h2 {
+      color: #1e88e5;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    label {
+      margin-top: 15px;
+      font-weight: 500;
+      color: #555;
+      display: block;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: 0.2s border-color;
+    }
+
+    select:focus, input:focus {
+      border-color: #42a5f5;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #cecece;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s background-color, transform 0.2s;
+
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #2492f3;
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      background-color: #cecece;
+      cursor: not-allowed;
+    }
+
+    #preview {
+      white-space: pre-wrap;
+      background: #f1f8ff;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid #d0e4ff;
+      margin-top: 20px;
+      color: #333;
+      min-height: 120px;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px 20px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+    <a href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='4.png') }}" alt="Logo"
+        style="width: 100px; height: 100px; border-radius: 50%;">
+    </a>
+    <h2 style="margin: 0; color: #1e88e5;">YQFM YURIST</h2>
+</div>
+
+<label for="templateSelect">Formani To'ldiring:</label>
+<form method="POST" action="{{ url_for('download', name=file_name) }}">
+    {% for inp in labels %}
+        <input id="{{ inp }}" name="{{ inp }}" placeholder="{{ inp }}">
+    {% endfor %}
+    <div id="inputsContainer"></div>
+    <label style="margin-top: 25px;"><strong>Forma ko'rinish:</strong></label>
+    {% for key, values in template.items() %}
+        <div class="preview-block" id="preview" data-template="{{ values }}">{{ values }}</div>
+    {% endfor %}
+    <button type="submit">
+        <img src="{{ url_for('static', filename='word.png') }}" style="width: 30px; height: 30px;">
+    </button>
+</form>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const previews = document.querySelectorAll('.preview-block');
+    const inputs = document.querySelectorAll('input');
+
+    // Store original template text
+    const templates = new Map();
+    previews.forEach(preview => {
+      templates.set(preview, preview.dataset.template);
+    });
+
+    // Update previews when any input changes
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        previews.forEach(preview => {
+          let updatedText = templates.get(preview);
+
+          // Replace raw words like name1, date1 etc.
+          inputs.forEach(inp => {
+            const target = inp.name;
+            const replacement = inp.value || target;
+            const regex = new RegExp(`\\b${target}\\b`, 'g');
+            updatedText = updatedText.replace(regex, replacement);
+          });
+
+          preview.innerText = updatedText;
+        });
+      });
+    });
+  });
+</script>
+
+</body>
+{% endblock %}

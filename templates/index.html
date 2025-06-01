@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0a067b, #107ad0);
+      padding: 3rem;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #ffffff;
+      margin-bottom: 3rem;
+    }
+
+    .template-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .template {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .template:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .template img {
+      width: 80px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+    }
+
+    .template-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #444;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+
+  <h1>📝 Kerakli Formani Tanlang</h1>
+
+  <div class="template-container">
+    <div class="template" onclick="selectTemplate('temp1')">
+      <img src="static/word.png" alt="Template 1" />
+      <div class="template-name">Ariza</div>
+    </div>
+    <div class="template" onclick="selectTemplate('temp2')">
+      <img src="static/word.png" alt="Template 2" />
+      <div class="template-name">Shartnoma</div>
+    </div>
+    <div class="template" onclick="selectTemplate('temp3')">
+      <img src="static/word.png" alt="Template 3" />
+      <div class="template-name">Bildirgi</div>
+    </div>
+  </div>
+
+  <script>
+    function selectTemplate(name) {
+      window.location.href = `/document/${name}`;
+    }
+  </script>
+{% endblock %}
